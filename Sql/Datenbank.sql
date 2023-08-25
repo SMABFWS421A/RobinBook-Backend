@@ -31,7 +31,9 @@ CREATE TABLE IF NOT EXISTS `adress` (
   CONSTRAINT `FK_user_adress` FOREIGN KEY (`fk_user_id`) REFERENCES `users` (`User_id`) ON DELETE CASCADE ON UPDATE CASCADE
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1 COLLATE=latin1_swedish_ci COMMENT='Adress for the Users\r\n';
 
--- Dumping data for table robin book.adress: ~0 rows (approximately)
+-- Dumping data for table robin book.adress: ~1 rows (approximately)
+INSERT INTO `adress` (`Street_name`, `House_number`, `Zipcode`, `State`, `fk_user_id`) VALUES
+	('beispielstraße', 1, 12345, 'Berlin', 0000000001);
 
 -- Dumping structure for table robin book.book
 CREATE TABLE IF NOT EXISTS `book` (
@@ -50,9 +52,13 @@ CREATE TABLE IF NOT EXISTS `book` (
   PRIMARY KEY (`Book_id`),
   KEY `FK_seller` (`FK_seller`),
   CONSTRAINT `FK_seller` FOREIGN KEY (`FK_seller`) REFERENCES `users` (`User_id`) ON DELETE CASCADE ON UPDATE CASCADE
-) ENGINE=InnoDB DEFAULT CHARSET=latin1 COLLATE=latin1_swedish_ci COMMENT='Book table\r\n';
+) ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=latin1 COLLATE=latin1_swedish_ci COMMENT='Book table\r\n';
 
--- Dumping data for table robin book.book: ~0 rows (approximately)
+-- Dumping data for table robin book.book: ~3 rows (approximately)
+INSERT INTO `book` (`Book_id`, `ISBN`, `Title`, `Author`, `Publisher`, `Publication_date`, `Edition`, `Summary`, `Genre`, `Price`, `State`, `FK_seller`) VALUES
+	(00000000000000000001, '3868206337', 'Faust I und II: Leinen mit Goldprägung', 'Johann Wolfgang von Goethe', 'Nikol', '2021-08-05', '1', 'Heinrich Faust, ein angesehener Forscher und Lehrer zu Beginn der Neuzeit, zieht die Bilanz seines Lebens und kommt zu einem doppelt niederschmetternden Fazit: Als Wissenschaftler fehle es ihm an tiefer Einsicht und brauchbaren Ergebnissen, und als Mensch sei er unfähig, das Leben in seiner Fülle zu genießen. In dieser verzweifelten Lage verspricht er dem Teufel seine Seele, wenn es diesem gelingen sollte, Faust aus seiner Unzufriedenheit und Ruhelosigkeit zu befreien. Der schließt mit Faust einen Pakt, verwandelt ihn zurück in einen jungen Mann, nimmt ihn mit auf eine Reise durch die Welt und hilft ihm, die Liebschaft mit der jungen Margarete, genannt Gretchen, einzufädeln.', 'Classic', 25.00, 'Pristine', 1),
+	(00000000000000000002, '3499247402', 'Die Odyssee', 'Homer', 'Rowohlt Taschenbuch', '2008-05-02', '7', 'Odysseus – göttlicher Dulder, listenreicher Trojabezwinger, Abenteurer und treuer Ehemann, zugleich Freund schöner Frauen – ist durch Homers Dichtung unsterblich. Wolfgang Schadewaldt schmiegt seine Prosaübersetzung mit solcher Genauigkeit und Erfindungskraft in den Rhythmus der griechischen Redefiguren und Sprachbilder der griechischen Verserzählung, dass moderne Leser dem Zauber epischer Spannung ebenso erliegen wie die alten Hellenen dem Gesang ihres Rhapsoden vor 3000 Jahren.', 'Fantasy', 7.99, 'slight signs of wear', 2),
+	(00000000000000000003, '3492251498', 'Biss zum Morgengrauen: Twilight', 'Stephenie Meyer', 'Piper Taschenbuch', '2008-08-01', '1', '»Es gab drei Dinge, deren ich mir absolut sicher war: Erstens, Edward war ein Vampir. Zweitens, ein Teil von ihm – und ich wusste nicht, wie mächtig dieser Teil war – dürstete nach meinem Blut. Und drittens, ich war bedingungslos und unwiderruflich in ihn verliebt.« Edward bestimmt bald Bellas Leben, doch damit schwebt sie fortan in ständiger Gefahr … Die Geschichte von Edward und Isabella begeisterte auf Anhieb weltweit und wurde ein internationaler Bestseller. Stephenie Meyers Debüt ist so romantisch wie spannend und fesselt bis zur letzten Seite.', 'Romance', 9.99, 'Pristine', 1);
 
 -- Dumping structure for table robin book.order
 CREATE TABLE IF NOT EXISTS `order` (
@@ -68,8 +74,8 @@ CREATE TABLE IF NOT EXISTS `order` (
   KEY `FK_Seller_order` (`FK_seller`),
   KEY `FK_client_order` (`FK_client`),
   CONSTRAINT `FK_Book_order` FOREIGN KEY (`FK_book`) REFERENCES `book` (`Book_id`) ON DELETE NO ACTION ON UPDATE NO ACTION,
-  CONSTRAINT `FK_Seller_order` FOREIGN KEY (`FK_seller`) REFERENCES `users` (`User_id`) ON DELETE NO ACTION ON UPDATE NO ACTION,
-  CONSTRAINT `FK_client_order` FOREIGN KEY (`FK_client`) REFERENCES `users` (`User_id`) ON DELETE NO ACTION ON UPDATE NO ACTION
+  CONSTRAINT `FK_Seller_order` FOREIGN KEY (`FK_seller`) REFERENCES `users` (`User_id`) ON DELETE CASCADE ON UPDATE CASCADE,
+  CONSTRAINT `FK_client_order` FOREIGN KEY (`FK_client`) REFERENCES `users` (`User_id`) ON DELETE CASCADE ON UPDATE CASCADE
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1 COLLATE=latin1_swedish_ci COMMENT='Order Table\r\n';
 
 -- Dumping data for table robin book.order: ~0 rows (approximately)
@@ -80,9 +86,13 @@ CREATE TABLE IF NOT EXISTS `users` (
   `Mail_address` varchar(150) NOT NULL,
   `Password` varchar(70) NOT NULL,
   PRIMARY KEY (`User_id`)
-) ENGINE=InnoDB DEFAULT CHARSET=latin1 COLLATE=latin1_swedish_ci COMMENT='Table for Users';
+) ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=latin1 COLLATE=latin1_swedish_ci COMMENT='Table for Users';
 
--- Dumping data for table robin book.users: ~0 rows (approximately)
+-- Dumping data for table robin book.users: ~3 rows (approximately)
+INSERT INTO `users` (`User_id`, `Mail_address`, `Password`) VALUES
+	(0000000001, 'maxMusterman@gmail.com', 'pass1'),
+	(0000000002, 'maxMusterman1@gmail.com', 'pass2'),
+	(0000000003, 'testuser@RobinBook', 'passwort');
 
 -- Dumping structure for table robin book.watchlist
 CREATE TABLE IF NOT EXISTS `watchlist` (
@@ -93,7 +103,11 @@ CREATE TABLE IF NOT EXISTS `watchlist` (
   CONSTRAINT `FK_user` FOREIGN KEY (`FK_user`) REFERENCES `users` (`User_id`) ON DELETE CASCADE ON UPDATE CASCADE
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1 COLLATE=latin1_swedish_ci COMMENT='Watchlist for users\r\n';
 
--- Dumping data for table robin book.watchlist: ~0 rows (approximately)
+-- Dumping data for table robin book.watchlist: ~3 rows (approximately)
+INSERT INTO `watchlist` (`watchlist_id`, `FK_user`) VALUES
+	(1, 1),
+	(2, 2),
+	(3, 3);
 
 -- Dumping structure for table robin book.watchposition
 CREATE TABLE IF NOT EXISTS `watchposition` (
