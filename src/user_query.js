@@ -15,6 +15,18 @@ router.get('/api/get_all_users', async function(req, res) {
     }
 })
 
+router.get('/api/get_user_by_id', async function(req, res) {
+  const User_id = req.body.User_id;
+  try {
+    const sqlQuery = 'SELECT * FROM users WHERE User_id =?'
+    const rows = await pool.query(sqlQuery, User_id)
+    res.status(200).json(rows);
+  } catch (error) {
+        console.error('Error fetching data:', error);
+        res.status(500).json({ error: 'An error occurred' });
+  }
+})
+
 /**
  * unten ist ein stück code welches dazu fungier später einen nutzer anzulegen.
  * dies könnte man als Controller in einem MVC Pattern beschreiben, da: 
