@@ -41,7 +41,7 @@ router.get('/api/get_user_by_id:id', async function(req, res) {
 
 router.post('/api/add_user', async function(req, res) {
   try {
-    const { Password, Mail_address } = req.body;
+    const { Password, Mail_address, Firstname, Lastname, Street_name, House_number, Zipcode, State } = req.body;
     
     // Insert user into the "users" table
     const sqlQuery = 'INSERT INTO users (Password, Mail_address) VALUES (?, ?)';
@@ -60,6 +60,21 @@ router.post('/api/add_user', async function(req, res) {
     }
     
     const User_id = rows[0].User_id;
+
+    const sqlQuery6 = 'INSERT INTO adress (Firstname, Lastname, Street_name, House_number, Zipcode, State, fk_user_id) VALUES (?, ?, ?, ?, ?, ?, ?)'
+    const values = [
+      Firstname,
+      Lastname,
+      Street_name,
+      House_number,
+      Zipcode,
+      User_id
+    ];
+    const Result2 = await pool.query(sqlQuery6, values);
+    
+    if (result2.affectedRows !== 1) {
+      return res.status(500).json({ error: 'User_adress could not be added' });
+    }
     
     // Insert into "watchlist" table
     const sqlQuery3 = 'INSERT INTO watchlist (watchlistid, FK_user) VALUES (?, ?)';
