@@ -18,9 +18,10 @@ router.get('/api/get_all_users', async function(req, res) {
 router.get('/api/get_user_by_id:id', async function(req, res) {
   const User_id = req.params.id;
   try {
-    const sqlQuery = 'SELECT * FROM users WHERE User_id =?'
-    const rows = await pool.query(sqlQuery, User_id)
-    res.status(200).json(rows);
+    const sqlQuery = `SELECT * FROM users WHERE
+    User_id =${req.params.id}`
+    const rows = await pool.query(sqlQuery)
+    res.status(200).json(rows[0]);
   } catch (error) {
         console.error('Error fetching data:', error);
         res.status(500).json({ error: 'An error occurred' });
@@ -61,18 +62,17 @@ router.post('/api/add_user', async function(req, res) {
     
     const User_id = rows[0].User_id;
 
-    const sqlQuery6 = 'INSERT INTO adress (Firstname, Lastname, Street_name, House_number, Zipcode, State, fk_user_id) VALUES (?, ?, ?, ?, ?, ?, ?)'
-    const values = [
-      Firstname,
-      Lastname,
-      Street_name,
-      House_number,
-      Zipcode,
-      User_id
-    ];
-    const Result2 = await pool.query(sqlQuery6, values);
+    const sqlQuery6 = `INSERT INTO adress (Firstname, Lastname, Street_name, House_number, Zipcode, State, fk_user_id) VALUES 
+    (${Firstname},
+     ${Lastname},
+     ${Street_name}, 
+     ${House_number},
+     ${Zipcode}, 
+     ${State}, 
+     ${User_id})`
+    const Result2 = await pool.query(sqlQuery6);
     
-    if (result2.affectedRows !== 1) {
+    if (Result2.affectedRows !== 1) {
       return res.status(500).json({ error: 'User_adress could not be added' });
     }
     

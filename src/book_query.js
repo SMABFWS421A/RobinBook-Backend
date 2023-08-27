@@ -19,7 +19,7 @@ router.get('/api/get_book:id', async function(req, res) {
     try {
         const sqlQuery = 'SELECT * FROM book WHERE Book_id=?'
         const rows = await pool.query(sqlQuery, Book_id)
-        res.status(200).json(rows);
+        res.status(200).json(rows[0]);
     } catch (error) {
         console.error('Error fetching book data', error);
         res.status(500).json({ error: 'An error occuted' });
