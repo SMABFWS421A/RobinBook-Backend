@@ -28,18 +28,6 @@ router.get('/api/get_user_by_id:id', async function(req, res) {
   }
 })
 
-/**
- * unten ist ein stück code welches dazu fungier später einen nutzer anzulegen.
- * dies könnte man als Controller in einem MVC Pattern beschreiben, da: 
- * 
- * Model: Die Interaktion mit der Datenbank mittels SQL-Abfragen, insbesondere das Einfügen und Abrufen von Daten aus den Tabellen "users" und "watchlist".
- * View: In einem Kontext einer HTTP-API könnte die "View" als die Repräsentation der Daten betrachtet werden, die als Antwort gesendet wird (z. B. JSON).
- * Controller: Der Route-Handler selbst fungiert als Controller. Er empfängt eingehende HTTP-Anfragen, verarbeitet die Daten aus den Anfragen, interagiert mit dem Model (Datenbank) und sendet eine Antwort an den Client.
- * 
- * 
- * 
- */
-
 router.post('/api/add_user', async function(req, res) {
   try {
     const { Password, Mail_address, Firstname, Lastname, Street_name, House_number, Zipcode, State } = req.body;
