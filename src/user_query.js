@@ -92,9 +92,9 @@ router.post('/api/add_user', async function(req, res) {
 });
 
 
-router.post('/api/delete_user', async function(req, res) {
+router.post('/api/delete_user:id', async function(req, res) {
   try {
-    const User_id = req.body.User_id;
+    const User_id = req.params.id;
     
     // Delete user from user table
     const sqlQuery = 'DELETE * FROM users WHERE User_id=?';
