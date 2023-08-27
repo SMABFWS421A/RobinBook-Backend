@@ -15,13 +15,15 @@ router.get('/api/get_all_users', async function(req, res) {
     }
 })
 
-router.get('/api/get_user_by_id:id', async function(req, res) {
-  const User_id = req.params.id;
+router.get('/api/get_user_by_id/:id', async function(req, res) {
   try {
-    const sqlQuery = `SELECT * FROM users WHERE
-    User_id =${req.params.id}`
-    const rows = await pool.query(sqlQuery)
-    res.status(200).json(rows[0]);
+    const User_id = 3 ||req.params.id;
+    const sqlQuery = `SELECT * FROM users WHERE User_id =${User_id}`
+    const sqlQuery2 = `SELECT * FROM adress WHERE fk_user_id=${User_id}`
+    const user = (await pool.query(sqlQuery))[0]
+    const address = (await pool.query(sqlQuery2))[0]
+    const data = {...address, ...user}
+    res.send(data);
   } catch (error) {
         console.error('Error fetching data:', error);
         res.status(500).json({ error: 'An error occurred' });

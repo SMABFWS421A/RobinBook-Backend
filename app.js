@@ -2,10 +2,14 @@ const express = require('express');
 const usersRouter = require('./src/user_query.js');
 const books_allRouter = require('./src/book_query.js');
 
+const cors = require('cors');
+
 const app = express();
+
 const port = 3000;
 
 // Middleware
+app.use(cors());
 app.use(express.json());
 
 // Attach routers
