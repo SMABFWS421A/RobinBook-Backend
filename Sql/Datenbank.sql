@@ -33,9 +33,9 @@ CREATE TABLE IF NOT EXISTS `adress` (
   CONSTRAINT `FK_user_adress` FOREIGN KEY (`fk_user_id`) REFERENCES `users` (`User_id`) ON DELETE CASCADE ON UPDATE CASCADE
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1 COLLATE=latin1_swedish_ci COMMENT='Adress for the Users\r\n';
 
--- Dumping data for table robin book.adress: ~0 rows (approximately)
+-- Dumping data for table robin book.adress: ~1 rows (approximately)
 INSERT INTO `adress` (`Street_name`, `House_number`, `Zipcode`, `Firstname`, `Lastname`, `State`, `fk_user_id`) VALUES
-	('beispielstraße', 1, 12345, '', '', 'Berlin', 0000000001);
+	('beispielstraße', 1, 12345, 'Max', 'Mustermann', 'Berlin', 0000000003);
 
 -- Dumping structure for table robin book.book
 CREATE TABLE IF NOT EXISTS `book` (
@@ -90,7 +90,7 @@ CREATE TABLE IF NOT EXISTS `users` (
   PRIMARY KEY (`User_id`)
 ) ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=latin1 COLLATE=latin1_swedish_ci COMMENT='Table for Users';
 
--- Dumping data for table robin book.users: ~2 rows (approximately)
+-- Dumping data for table robin book.users: ~3 rows (approximately)
 INSERT INTO `users` (`User_id`, `Mail_address`, `Password`) VALUES
 	(0000000001, 'maxMusterman@gmail.com', 'pass1'),
 	(0000000002, 'maxMusterman1@gmail.com', 'pass2'),
@@ -105,7 +105,7 @@ CREATE TABLE IF NOT EXISTS `watchlist` (
   CONSTRAINT `FK_user` FOREIGN KEY (`FK_user`) REFERENCES `users` (`User_id`) ON DELETE CASCADE ON UPDATE CASCADE
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1 COLLATE=latin1_swedish_ci COMMENT='Watchlist for users\r\n';
 
--- Dumping data for table robin book.watchlist: ~2 rows (approximately)
+-- Dumping data for table robin book.watchlist: ~3 rows (approximately)
 INSERT INTO `watchlist` (`watchlist_id`, `FK_user`) VALUES
 	(1, 1),
 	(2, 2),
