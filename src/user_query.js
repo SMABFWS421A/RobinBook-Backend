@@ -15,8 +15,8 @@ router.get('/api/get_all_users', async function(req, res) {
     }
 })
 
-router.get('/api/get_user_by_id', async function(req, res) {
-  const User_id = req.body.User_id;
+router.get('/api/get_user_by_id:id', async function(req, res) {
+  const User_id = req.params.id;
   try {
     const sqlQuery = 'SELECT * FROM users WHERE User_id =?'
     const rows = await pool.query(sqlQuery, User_id)
